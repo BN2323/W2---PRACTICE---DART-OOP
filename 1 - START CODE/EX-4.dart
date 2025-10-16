@@ -47,9 +47,9 @@ class Order {
 
   int get id => _id;
 
-  void addItem(OrderItem item) {
-    _items.add(item);
-    print('Added ${item.productName} (x${item.quantity})');
+  void addItem(Product pro, int quantity) {
+    _items.add(OrderItem(pro, quantity));
+    print('Added ${pro.name} (x${pro.price})');
   }
 
   double get total {
@@ -72,14 +72,18 @@ class Order {
     print('--- Order #$_id ---');
     print('Date: $date');
     print('Delivery Type: $_deliveryType');
-    print('Address: ${_address._street}, ${_address._city}, ${_address._zipcode}');
+    print(
+      'Address: ${_address._street}, ${_address._city}, ${_address._zipcode}',
+    );
     print('Items:');
     for (var item in _items) {
       print('- ${item.productName} x${item.quantity} = \$${item.subTotal}');
     }
     print('Total Amount: \$${total}');
     if (_payment != null) {
-      print('Payment Method: ${_payment!.method.name}, Paid: ${_payment!.isPaid}');
+      print(
+        'Payment Method: ${_payment!.method.name}, Paid: ${_payment!.isPaid}',
+      );
     }
     print('-------------------\n');
   }
@@ -131,8 +135,9 @@ void main() {
   Customer cus1 = Customer('Ben', '097876633', 'bczin@gmail.com', add1);
 
   Order order1 = Order('2025-10-15', DeliveryType.DELIVERY, add1);
-  order1.addItem(OrderItem(pro1, 2));
-  order1.addItem(OrderItem(pro2, 3));
+  order1.addItem(pro1, 2);
+  order1.addItem(pro2, 3);
+  
 
   cus1.createOrder(order1);
   Payment payment1 = Payment(PaymentMethod.CREDIT_CARD, 60);
